@@ -150,7 +150,7 @@ var Reader = function (LilNode, LilText, util) {
             name == 'footer' || name == 'textarea'
     }
 
-    var RE_HEADING = /^(h[1-6]|title)$/
+    var RE_HEADING = /^(h[1-6])$/
     var RE_IGNORE = /^(br|figcaption|figure|head|hr|iframe|link|meta|noscript|script|style)$/
 
     Reader.prototype.onclosetag = function (name) {
@@ -230,13 +230,6 @@ var title = function (LilNode, LilText, unicode, util) {
             return a.trim().replace(unicode.RE_SPACE, ' ') })
     }
 
-    function _bisect(title) {
-        if (title && title.indexOf('::') != -1) {
-            title = title.split('::')[0].trim()
-        }
-        return title
-    }
-
     function title(reader) {
         var _title = new unicode.CString(_clean(reader.title)),
             clean = reader.headings.map(_clean),
@@ -244,7 +237,7 @@ var title = function (LilNode, LilText, unicode, util) {
             headings = clean.concat(clean2).filter(function (a) { return a })
 
         if (!headings.length)
-            return _bisect(_title._initial) || ''
+            return _title._initial || ''
         if (headings.length == 1)
             return headings[0]
         if (_title._initial) {
