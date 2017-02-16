@@ -189,6 +189,8 @@ var Reader = function (LilNode, LilText, util) {
             this._cur._hyperlinkContent = true
         else if (name == 'itemtype' && value == 'http://schema.org/Comment')
             this._cur._otherBadContent = true
+        else if (name == 'style' && value == 'display: none') // TODO: need to check for include NOT equality!
+            this._cur._otherBadContent = true
     }
 
     Reader.prototype.ontext = function (text) {
